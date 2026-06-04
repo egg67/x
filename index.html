@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Page Not Found</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>THE SEVENTH REGISTER</title>
     <style>
         * {
             margin: 0;
@@ -12,115 +12,478 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: white;
-            min-height: 100vh;
+            background: #0c0c0c;
+            color: #c5c5c5;
+            font-family: 'Courier New', 'Courier', 'Liberation Mono', 'Consolas', 'Menlo', monospace;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: none;
+            -moz-osx-font-smoothing: unset;
+            background-image: none;
+        }
+
+        #topbar {
+            background: #161616;
+            border-bottom: 1px solid #2a2a2a;
+            padding: 10px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #999;
+            flex-shrink: 0;
+        }
+
+        #container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            height: calc(100vh - 41px);
+        }
+
+        #sidebar {
+            width: 300px;
+            border-right: 1px solid #2a2a2a;
+            background: #111111;
+            overflow-y: auto;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #sidebar h2 {
+            padding: 16px 20px;
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            border-bottom: 1px solid #2a2a2a;
+            color: #5e5e5e;
+            font-weight: 400;
+            background: #0e0e0e;
+        }
+
+        .file-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .file {
+            padding: 12px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid #1f1f1f;
+            transition: background 0.1s ease;
+            font-size: 12px;
+            letter-spacing: 0.04em;
+            color: #a0a0a0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-left: 3px solid transparent;
+        }
+
+        .file:hover {
+            background: #1e1e1e;
+            color: #c0c0c0;
+        }
+
+        .file.active-file {
+            background: #1c1c1c;
+            border-left: 3px solid #666;
+            color: #d4d4d4;
+            font-weight: bold;
+        }
+
+        .file .file-icon {
+            font-size: 14px;
+            width: 18px;
+            text-align: center;
+            color: #666;
+        }
+
+        .file.active-file .file-icon {
+            color: #999;
+        }
+
+        .file .file-name {
+            flex: 1;
+        }
+
+        #viewer {
+            flex: 1;
+            padding: 40px 50px;
+            overflow-y: auto;
+            background: #0f0f0f;
+            background-image: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
         }
 
-        .container {
+        .window {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+            width: 100%;
+        }
+
+        .window h1 {
+            font-size: 18px;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #999;
+            margin-top: 30px;
+            margin-bottom: 28px;
+            word-spacing: 0.2em;
+            border: none;
+            padding: 0;
+        }
+
+        .window .file-meta {
+            font-size: 10px;
+            color: #555;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-top: 24px;
+        }
+
+        .window p {
+            line-height: 1.8;
+            margin-bottom: 18px;
+            font-size: 13px;
+            color: #b8b8b8;
+            word-spacing: 0.04em;
+            letter-spacing: 0.02em;
             text-align: center;
             max-width: 600px;
-            padding: 40px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .error-code {
-            font-size: 120px;
-            font-weight: 800;
-            color: #333;
-            margin-bottom: 10px;
+        .symbol-container {
+            margin: 0 auto 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 180px;
+            user-select: none;
         }
 
-        h1 {
-            font-size: 28px;
-            color: #333;
-            margin-bottom: 15px;
-            font-weight: 500;
+        .symbol-container svg {
+            width: 140px;
+            height: 140px;
+            display: block;
         }
 
-        p {
-            font-size: 16px;
-            color: #555;
-            margin-bottom: 15px;
-            line-height: 1.5;
+        .symbol-container svg line,
+        .symbol-container svg circle,
+        .symbol-container svg path,
+        .symbol-container svg rect,
+        .symbol-container svg polygon,
+        .symbol-container svg polyline {
+            stroke: #6a6a6a;
+            stroke-width: 1.2;
+            fill: none;
         }
 
-        .suggestions {
+        .symbol-container svg text {
+            fill: #6a6a6a;
+            font-family: 'Courier New', 'Courier', 'Liberation Mono', 'Consolas', 'Menlo', monospace;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+        }
+
+        .note {
+            border-left: 2px solid #444444;
+            padding-left: 22px;
+            margin-bottom: 22px;
+            padding-top: 2px;
+            padding-bottom: 2px;
             text-align: left;
-            background: #f9f9f9;
-            padding: 20px 30px;
-            border-radius: 8px;
-            margin: 25px 0;
         }
 
-        .suggestions h3 {
-            font-size: 18px;
-            color: #333;
-            margin-bottom: 12px;
-            font-weight: 500;
-        }
-
-        .suggestions ul {
-            margin-left: 20px;
-            color: #555;
-        }
-
-        .suggestions li {
-            margin: 8px 0;
-            line-height: 1.4;
-        }
-
-        .home-link {
-            display: inline-block;
-            padding: 12px 24px;
-            background: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: background 0.2s;
-        }
-
-        .home-link:hover {
-            background: #0056b3;
-        }
-
-        hr {
-            margin: 30px 0;
-            border: none;
-            border-top: 1px solid #eee;
-        }
-
-        .small-text {
+        .note p {
             font-size: 12px;
-            color: #999;
-            margin-top: 20px;
+            color: #a5a5a5;
+            line-height: 1.75;
+            text-align: left;
+            max-width: 100%;
+        }
+
+        .small {
+            color: #5a5a5a;
+            font-size: 10px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .welcome-text {
+            color: #6e6e6e;
+            margin-top: 30px;
+        }
+
+        @media screen and (max-width: 700px) {
+            #sidebar {
+                width: 220px;
+            }
+            .file {
+                font-size: 10px;
+                padding: 10px 14px;
+            }
+            #viewer {
+                padding: 25px 20px;
+            }
+            .window h1 {
+                font-size: 16px;
+            }
+            .symbol-container {
+                height: 140px;
+            }
+            .symbol-container svg {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        @media screen and (max-width: 520px) {
+            #container {
+                flex-direction: column;
+            }
+            #sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 180px;
+                border-right: none;
+                border-bottom: 1px solid #2a2a2a;
+            }
+            #viewer {
+                padding: 20px 16px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="error-code">404</div>
-        <h1>Page Not Found</h1>
-        <p>Oops! The page you're looking for doesn't exist or has been moved.</p>
-        <p>It might have been deleted, renamed, or it never existed in the first place.</p>
+    <div id="topbar">
+        <div>THE SEVENTH REGISTER</div>
+        <div></div>
+    </div>
 
-        <div class="suggestions">
-            <h3>What you can try:</h3>
-            <ul>
-                <li>Check the URL for typos or spelling errors</li>
-                <li>Go back to the previous page and try a different link</li>
-                <li>Use the navigation menu to find what you're looking for</li>
-                <li>Contact support if you believe this is an error</li>
-            </ul>
+    <div id="container">
+        <div id="sidebar">
+            <h2>FRAGMENTS</h2>
+            <div class="file-list">
+                <div class="file active-file" onclick="openFile('f1', this)">
+                    <span class="file-icon">I</span>
+                    <span class="file-name">POMPEY</span>
+                </div>
+                <div class="file" onclick="openFile('f2', this)">
+                    <span class="file-icon">II</span>
+                    <span class="file-name">CAESAR</span>
+                </div>
+                <div class="file" onclick="openFile('f3', this)">
+                    <span class="file-icon">III</span>
+                    <span class="file-name">CONSULSHIP</span>
+                </div>
+                <div class="file" onclick="openFile('f4', this)">
+                    <span class="file-icon">IV</span>
+                    <span class="file-name">TRIUMVIRATE</span>
+                </div>
+                <div class="file" onclick="openFile('f5', this)">
+                    <span class="file-icon">V</span>
+                    <span class="file-name">GAUL</span>
+                </div>
+                <div class="file" onclick="openFile('f6', this)">
+                    <span class="file-icon">VI</span>
+                    <span class="file-name">RUBICON</span>
+                </div>
+                <div class="file" onclick="openFile('f7', this)">
+                    <span class="file-icon">VII</span>
+                    <span class="file-name">EGYPT</span>
+                </div>
+                <div style="border-top:1px solid #1f1f1f; margin: 4px 0;"></div>
+                <div class="file" onclick="openFile('notes', this)">
+                    <span class="file-icon">¶</span>
+                    <span class="file-name">COMMENTARY</span>
+                </div>
+            </div>
         </div>
 
-        <a href="/" class="home-link">← Back to Homepage</a>
-        <hr>
-        <div class="small-text">Error 404 • Reference: 0x404 — Page not found</div>
+        <div id="viewer">
+            <div class="window" id="welcome">
+                <div class="symbol-container">
+                    <svg viewBox="0 0 140 140">
+                        <circle cx="70" cy="70" r="55" stroke-dasharray="4 6"/>
+                        <circle cx="70" cy="70" r="40" stroke-dasharray="2 8"/>
+                        <circle cx="70" cy="70" r="20" />
+                        <line x1="70" y1="15" x2="70" y2="0" />
+                        <line x1="70" y1="125" x2="70" y2="140" />
+                        <line x1="15" y1="70" x2="0" y2="70" />
+                        <line x1="125" y1="70" x2="140" y2="70" />
+                    </svg>
+                </div>
+                <h1>THE SEVENTH REGISTER</h1>
+                <p class="welcome-text">Select a fragment from the archive index.</p>
+                <p class="small">Pelusium Collection</p>
+            </div>
+
+            <div class="window hidden" id="f1">
+                <div class="symbol-container">
+                    <svg viewBox="0 0 140 140">
+                        <polygon points="70,10 120,110 20,110" />
+                        <line x1="70" y1="10" x2="70" y2="110" />
+                        <line x1="20" y1="110" x2="120" y2="110" />
+                        <circle cx="70" cy="60" r="12" />
+                        <line x1="70" y1="72" x2="70" y2="100" />
+                        <line x1="58" y1="84" x2="82" y2="84" />
+                    </svg>
+                </div>
+                <h1>FRAGMENT I</h1>
+                <p>Pompey the Great was born in 106 BCE into a family whose influence within the Republic would provide the foundation for his later rise. By the end of his life, he would be regarded as one of Rome's greatest commanders.</p>
+            </div>
+
+            <div class="window hidden" id="f2">
+                <div class="symbol-container">
+                    <svg viewBox="0 0 140 140">
+                        <rect x="25" y="25" width="90" height="90" />
+                        <rect x="40" y="40" width="60" height="60" />
+                        <line x1="70" y1="25" x2="70" y2="10" />
+                        <line x1="70" y1="115" x2="70" y2="130" />
+                        <line x1="25" y1="70" x2="10" y2="70" />
+                        <line x1="115" y1="70" x2="130" y2="70" />
+                    </svg>
+                </div>
+                <h1>FRAGMENT II</h1>
+                <p>The birth of Julius Caesar is traditionally placed in 100 BCE. Although born into an ancient patrician family, his early position offered little indication of the political dominance he would later achieve.</p>
+            </div>
+
+            <div class="window hidden" id="f3">
+                <div class="symbol-container">
+                    <svg viewBox="0 0 140 140">
+                        <line x1="20" y1="20" x2="120" y2="20" />
+                        <line x1="20" y1="20" x2="20" y2="120" />
+                        <line x1="20" y1="120" x2="120" y2="120" />
+                        <line x1="120" y1="20" x2="120" y2="120" />
+                        <line x1="20" y1="70" x2="120" y2="70" />
+                        <line x1="70" y1="20" x2="70" y2="120" />
+                        <circle cx="70" cy="70" r="25" />
+                    </svg>
+                </div>
+                <h1>FRAGMENT III</h1>
+                <p>In 70 BCE, Pompey and Crassus held the consulship together. Their election marked a significant shift in the political balance of the Republic and increased Pompey's influence in Rome.</p>
+            </div>
+
+            <div class="window hidden" id="f4">
+                <div class="symbol-container">
+                    <svg viewBox="0 0 140 140">
+                        <circle cx="50" cy="50" r="18" />
+                        <circle cx="90" cy="50" r="18" />
+                        <circle cx="70" cy="100" r="18" />
+                        <line x1="63" y1="63" x2="77" y2="87" />
+                        <line x1="77" y1="63" x2="63" y2="87" />
+                        <line x1="50" y1="68" x2="70" y2="82" />
+                        <line x1="90" y1="68" x2="70" y2="82" />
+                    </svg>
+                </div>
+                <h1>FRAGMENT IV</h1>
+                <p>The political alliance later known as the First Triumvirate emerged around 60 BCE, bringing Caesar, Pompey, and Crassus into a partnership intended to advance their respective ambitions.</p>
+            </div>
+
+            <div class="window hidden" id="f5">
+                <div class="symbol-container">
+                    <svg viewBox="0 0 140 140">
+                        <rect x="30" y="40" width="80" height="60" />
+                        <line x1="30" y1="40" x2="70" y2="15" />
+                        <line x1="110" y1="40" x2="70" y2="15" />
+                        <line x1="70" y1="15" x2="70" y2="5" />
+                        <circle cx="70" cy="70" r="14" />
+                        <line x1="70" y1="84" x2="70" y2="100" />
+                    </svg>
+                </div>
+                <h1>FRAGMENT V</h1>
+                <p>Caesar's consulship in 59 BCE strengthened his political position and secured the commands that would eventually lead to his conquest of Gaul.</p>
+            </div>
+
+            <div class="window hidden" id="f6">
+                <div class="symbol-container">
+                    <svg viewBox="0 0 140 140">
+                        <path d="M10,70 Q35,40 70,70 Q105,100 130,70" />
+                        <path d="M10,85 Q35,55 70,85 Q105,115 130,85" />
+                        <path d="M10,100 Q35,70 70,100 Q105,130 130,100" />
+                        <line x1="70" y1="10" x2="70" y2="55" />
+                        <circle cx="70" cy="55" r="6" />
+                    </svg>
+                </div>
+                <h1>FRAGMENT VI</h1>
+                <p>The crossing of the Rubicon in 49 BCE transformed a political dispute into open civil war. Caesar's advance forced many of his rivals, including Pompey, to abandon Rome.</p>
+            </div>
+
+            <div class="window hidden" id="f7">
+                <div class="symbol-container">
+                    <svg viewBox="0 0 140 140">
+                        <polygon points="70,10 130,130 10,130" />
+                        <line x1="70" y1="10" x2="70" y2="130" />
+                        <line x1="10" y1="130" x2="130" y2="130" />
+                        <rect x="60" y="90" width="20" height="30" />
+                        <line x1="60" y1="105" x2="50" y2="105" />
+                        <line x1="80" y1="105" x2="90" y2="105" />
+                    </svg>
+                </div>
+                <h1>FRAGMENT VII</h1>
+                <p>After his defeat at Pharsalus, Pompey fled eastward. In 48 BCE, he arrived in Egypt, where he was assassinated shortly after reaching the shore.</p>
+            </div>
+
+            <div class="window hidden" id="notes">
+                <h1>ARCHIVIST'S COMMENTARY</h1>
+                <div class="file-meta">Reference: REG-VII · MS 1847.3</div>
+                <div class="note">
+                    <p>The present register preserves only seven entries considered sufficiently complete for study. Earlier copies refer to additional material, though no reliable versions are known to survive.</p>
+                </div>
+                <div class="note">
+                    <p>Comparison with surviving references suggests that the register was assembled from several damaged accounts rather than copied from a single original source. The compiler appears to have combined fragmented material into a unified record before preservation.</p>
+                </div>
+                <div class="note">
+                    <p>Although the surviving fragments likely originated from different documents, the final arrangement displays a deliberate consistency. The sequence preserved here appears more systematic than would be expected from the condition of the source material itself.</p>
+                </div>
+                <div class="note">
+                    <p>Certain annotations employ ordinal conventions commonly encountered in Roman administrative records. Such notation would have been familiar to educated officials and therefore rarely required explanation within contemporary documents.</p>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script>
+        function openFile(id, element) {
+            document.querySelectorAll('.window').forEach(w => {
+                w.classList.add('hidden');
+            });
+            document.getElementById(id).classList.remove('hidden');
+
+            document.querySelectorAll('.file').forEach(f => {
+                f.classList.remove('active-file');
+            });
+            if (element) {
+                element.classList.add('active-file');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstFile = document.querySelector('.file.active-file');
+            if (firstFile) {
+                const onclickAttr = firstFile.getAttribute('onclick');
+                const match = onclickAttr.match(/'([^']+)'/);
+                if (match) {
+                    document.getElementById('welcome').classList.add('hidden');
+                    document.getElementById(match[1]).classList.remove('hidden');
+                }
+            }
+        });
+    </script>
 </body>
 </html>
