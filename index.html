@@ -1,482 +1,250 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>THE SEVENTH REGISTER</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<!DOCTYPE html><html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"> <title>THE SEVENTH REGISTER</title> <style> * { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+background: #0c0c0c;
+color: #c5c5c5;
+font-family: 'Courier New', 'Courier', 'Liberation Mono', 'Consolas', 'Menlo', monospace;
+height: 100vh;
+display: flex;
+flex-direction: column;
+-webkit-font-smoothing: none;
+-moz-osx-font-smoothing: unset;
+background-image: none;
+}
 
-        body {
-            background: #0c0c0c;
-            color: #c5c5c5;
-            font-family: 'Courier New', 'Courier', 'Liberation Mono', 'Consolas', 'Menlo', monospace;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            -webkit-font-smoothing: none;
-            -moz-osx-font-smoothing: unset;
-            background-image: none;
-        }
+#topbar {
+background: #161616;
+border-bottom: 1px solid #2a2a2a;
+padding: 15px 36px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+font-size: 16.5px;
+letter-spacing: 0.08em;
+text-transform: uppercase;
+color: #999;
+flex-shrink: 0;
+}
 
-        #topbar {
-            background: #161616;
-            border-bottom: 1px solid #2a2a2a;
-            padding: 15px 36px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 16.5px;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: #999;
-            flex-shrink: 0;
-        }
+#container {
+display: flex;
+flex: 1;
+overflow: hidden;
+height: calc(100vh - 61.5px);
+}
 
-        #container {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-            height: calc(100vh - 61.5px);
-        }
+#sidebar {
+width: 450px;
+border-right: 1px solid #2a2a2a;
+background: #111111;
+overflow-y: auto;
+flex-shrink: 0;
+display: flex;
+flex-direction: column;
+}
 
-        #sidebar {
-            width: 450px;
-            border-right: 1px solid #2a2a2a;
-            background: #111111;
-            overflow-y: auto;
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-        }
+#sidebar h2 {
+padding: 24px 30px;
+font-size: 15px;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+border-bottom: 1px solid #2a2a2a;
+color: #5e5e5e;
+font-weight: 400;
+background: #0e0e0e;
+}
 
-        #sidebar h2 {
-            padding: 24px 30px;
-            font-size: 15px;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            border-bottom: 1px solid #2a2a2a;
-            color: #5e5e5e;
-            font-weight: 400;
-            background: #0e0e0e;
-        }
+.file-list {
+flex: 1;
+overflow-y: auto;
+}
 
-        .file-list {
-            flex: 1;
-            overflow-y: auto;
-        }
+.file {
+padding: 18px 30px;
+cursor: pointer;
+border-bottom: 1px solid #1f1f1f;
+transition: background 0.1s ease;
+font-size: 18px;
+letter-spacing: 0.04em;
+color: #a0a0a0;
+display: flex;
+align-items: center;
+gap: 15px;
+border-left: 4.5px solid transparent;
+}
 
-        .file {
-            padding: 18px 30px;
-            cursor: pointer;
-            border-bottom: 1px solid #1f1f1f;
-            transition: background 0.1s ease;
-            font-size: 18px;
-            letter-spacing: 0.04em;
-            color: #a0a0a0;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            border-left: 4.5px solid transparent;
-        }
+.file:hover {
+background: #1e1e1e;
+color: #c0c0c0;
+}
 
-        .file:hover {
-            background: #1e1e1e;
-            color: #c0c0c0;
-        }
+.file.active-file {
+background: #1c1c1c;
+border-left: 4.5px solid #666;
+color: #d4d4d4;
+font-weight: bold;
+}
 
-        .file.active-file {
-            background: #1c1c1c;
-            border-left: 4.5px solid #666;
-            color: #d4d4d4;
-            font-weight: bold;
-        }
+.file .file-icon {
+font-size: 21px;
+width: 27px;
+text-align: center;
+color: #666;
+}
 
-        .file .file-icon {
-            font-size: 21px;
-            width: 27px;
-            text-align: center;
-            color: #666;
-        }
+.file.active-file .file-icon {
+color: #999;
+}
 
-        .file.active-file .file-icon {
-            color: #999;
-        }
+.file .file-name {
+flex: 1;
+}
 
-        .file .file-name {
-            flex: 1;
-        }
+#viewer {
+flex: 1;
+padding: 60px 75px;
+overflow-y: auto;
+background: #0f0f0f;
+background-image: none;
+display: flex;
+align-items: center;
+justify-content: center;
+}
 
-        #viewer {
-            flex: 1;
-            padding: 60px 75px;
-            overflow-y: auto;
-            background: #0f0f0f;
-            background-image: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+.window {
+max-width: 1050px;
+margin: 0 auto;
+text-align: center;
+width: 100%;
+}
 
-        .window {
-            max-width: 1050px;
-            margin: 0 auto;
-            text-align: center;
-            width: 100%;
-        }
+.window h1 {
+font-size: 27px;
+font-weight: 400;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: #999;
+margin-top: 45px;
+margin-bottom: 42px;
+word-spacing: 0.2em;
+border: none;
+padding: 0;
+}
 
-        .window h1 {
-            font-size: 27px;
-            font-weight: 400;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: #999;
-            margin-top: 45px;
-            margin-bottom: 42px;
-            word-spacing: 0.2em;
-            border: none;
-            padding: 0;
-        }
+.window .file-meta {
+font-size: 15px;
+color: #555;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+margin-top: 36px;
+}
 
-        .window .file-meta {
-            font-size: 15px;
-            color: #555;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            margin-top: 36px;
-        }
+.window p {
+line-height: 1.8;
+margin-bottom: 27px;
+font-size: 19.5px;
+color: #b8b8b8;
+word-spacing: 0.04em;
+letter-spacing: 0.02em;
+text-align: center;
+max-width: 900px;
+margin-left: auto;
+margin-right: auto;
+}
 
-        .window p {
-            line-height: 1.8;
-            margin-bottom: 27px;
-            font-size: 19.5px;
-            color: #b8b8b8;
-            word-spacing: 0.04em;
-            letter-spacing: 0.02em;
-            text-align: center;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+.symbol-container {
+margin: 0 auto 30px auto;
+display: flex;
+align-items: center;
+justify-content: center;
+height: 270px;
+user-select: none;
+}
 
-        .symbol-container {
-            margin: 0 auto 30px auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 270px;
-            user-select: none;
-        }
+.symbol-container .old-italic {
+font-family: 'Courier New', 'Courier', 'Liberation Mono', 'Consolas', 'Menlo', monospace;
+font-size: 180px;
+color: #6a6a6a;
+line-height: 1;
+letter-spacing: 0.05em;
+display: flex;
+align-items: center;
+justify-content: center;
+text-align: center;
+}
 
-        .symbol-container svg {
-            width: 210px;
-            height: 210px;
-            display: block;
-        }
+.note {
+border-left: 3px solid #444444;
+padding-left: 33px;
+margin-bottom: 33px;
+padding-top: 3px;
+padding-bottom: 3px;
+text-align: left;
+}
 
-        .symbol-container svg line,
-        .symbol-container svg circle,
-        .symbol-container svg path,
-        .symbol-container svg rect,
-        .symbol-container svg polygon,
-        .symbol-container svg polyline {
-            stroke: #6a6a6a;
-            stroke-width: 1.8;
-            fill: none;
-        }
+.note p {
+font-size: 18px;
+color: #a5a5a5;
+line-height: 1.75;
+text-align: left;
+max-width: 100%;
+}
 
-        .note {
-            border-left: 3px solid #444444;
-            padding-left: 33px;
-            margin-bottom: 33px;
-            padding-top: 3px;
-            padding-bottom: 3px;
-            text-align: left;
-        }
+.small {
+color: #5a5a5a;
+font-size: 15px;
+letter-spacing: 0.06em;
+text-transform: uppercase;
+}
 
-        .note p {
-            font-size: 18px;
-            color: #a5a5a5;
-            line-height: 1.75;
-            text-align: left;
-            max-width: 100%;
-        }
+.hidden {
+display: none;
+}
 
-        .small {
-            color: #5a5a5a;
-            font-size: 15px;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-        }
+.welcome-text {
+color: #6e6e6e;
+margin-top: 45px;
+}
 
-        .hidden {
-            display: none;
-        }
+@media screen and (max-width: 700px) {
+#sidebar {
+width: 330px;
+}
+.file {
+font-size: 15px;
+padding: 15px 21px;
+}
+#viewer {
+padding: 37.5px 30px;
+}
+.window h1 {
+font-size: 24px;
+}
+.symbol-container {
+height: 210px;
+}
+.symbol-container .old-italic {
+font-size: 140px;
+}
+}
 
-        .welcome-text {
-            color: #6e6e6e;
-            margin-top: 45px;
-        }
+@media screen and (max-width: 520px) {
+#container {
+flex-direction: column;
+}
+#sidebar {
+width: 100%;
+height: auto;
+max-height: 270px;
+border-right: none;
+border-bottom: 1px solid #2a2a2a;
+}
+#viewer {
+padding: 30px 24px;
+}
+.symbol-container .old-italic {
+font-size: 110px;
+}
+}
+</style>
 
-        @media screen and (max-width: 700px) {
-            #sidebar {
-                width: 330px;
-            }
-            .file {
-                font-size: 15px;
-                padding: 15px 21px;
-            }
-            #viewer {
-                padding: 37.5px 30px;
-            }
-            .window h1 {
-                font-size: 24px;
-            }
-            .symbol-container {
-                height: 210px;
-            }
-            .symbol-container svg {
-                width: 150px;
-                height: 150px;
-            }
-        }
-
-        @media screen and (max-width: 520px) {
-            #container {
-                flex-direction: column;
-            }
-            #sidebar {
-                width: 100%;
-                height: auto;
-                max-height: 270px;
-                border-right: none;
-                border-bottom: 1px solid #2a2a2a;
-            }
-            #viewer {
-                padding: 30px 24px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div id="topbar">
-        <div>THE SEVENTH REGISTER</div>
-        <div></div>
-    </div>
-
-    <div id="container">
-        <div id="sidebar">
-            <h2>FRAGMENTS</h2>
-            <div class="file-list">
-                <div class="file active-file" onclick="openFile('f1', this)">
-                    <span class="file-icon">I</span>
-                    <span class="file-name">POMPEY</span>
-                </div>
-                <div class="file" onclick="openFile('f2', this)">
-                    <span class="file-icon">II</span>
-                    <span class="file-name">CAESAR</span>
-                </div>
-                <div class="file" onclick="openFile('f3', this)">
-                    <span class="file-icon">III</span>
-                    <span class="file-name">CONSULSHIP</span>
-                </div>
-                <div class="file" onclick="openFile('f4', this)">
-                    <span class="file-icon">IV</span>
-                    <span class="file-name">TRIUMVIRATE</span>
-                </div>
-                <div class="file" onclick="openFile('f5', this)">
-                    <span class="file-icon">V</span>
-                    <span class="file-name">GAUL</span>
-                </div>
-                <div class="file" onclick="openFile('f6', this)">
-                    <span class="file-icon">VI</span>
-                    <span class="file-name">RUBICON</span>
-                </div>
-                <div class="file" onclick="openFile('f7', this)">
-                    <span class="file-icon">VII</span>
-                    <span class="file-name">EGYPT</span>
-                </div>
-                <div style="border-top:1px solid #1f1f1f; margin: 6px 0;"></div>
-                <div class="file" onclick="openFile('notes', this)">
-                    <span class="file-icon">¶</span>
-                    <span class="file-name">COMMENTARY</span>
-                </div>
-            </div>
-        </div>
-
-        <div id="viewer">
-            <div class="window" id="welcome">
-                <div class="symbol-container">
-                    <svg viewBox="0 0 140 140">
-                        <circle cx="70" cy="70" r="55" stroke-dasharray="4 6"/>
-                        <circle cx="70" cy="70" r="40" stroke-dasharray="2 8"/>
-                        <circle cx="70" cy="70" r="20" />
-                        <line x1="70" y1="15" x2="70" y2="0" />
-                        <line x1="70" y1="125" x2="70" y2="140" />
-                        <line x1="15" y1="70" x2="0" y2="70" />
-                        <line x1="125" y1="70" x2="140" y2="70" />
-                    </svg>
-                </div>
-                <h1>THE SEVENTH REGISTER</h1>
-                <p class="welcome-text">Select a fragment from the archive index.</p>
-                <p class="small">Pelusium Collection</p>
-            </div>
-
-            <div class="window hidden" id="f1">
-                <div class="symbol-container">
-                    <svg viewBox="0 0 140 140">
-                        <polygon points="70,10 120,110 20,110" />
-                        <line x1="70" y1="10" x2="70" y2="110" />
-                        <line x1="20" y1="110" x2="120" y2="110" />
-                        <circle cx="70" cy="60" r="12" />
-                        <line x1="70" y1="72" x2="70" y2="100" />
-                        <line x1="58" y1="84" x2="82" y2="84" />
-                    </svg>
-                </div>
-                <h1>FRAGMENT I</h1>
-                <p>Pompey the Great was born in 106 BCE into a family whose influence within the Republic would provide the foundation for his later rise. By the end of his life, he would be regarded as one of Rome's greatest commanders.</p>
-            </div>
-
-            <div class="window hidden" id="f2">
-                <div class="symbol-container">
-                    <svg viewBox="0 0 140 140">
-                        <rect x="25" y="25" width="90" height="90" />
-                        <rect x="40" y="40" width="60" height="60" />
-                        <line x1="70" y1="25" x2="70" y2="10" />
-                        <line x1="70" y1="115" x2="70" y2="130" />
-                        <line x1="25" y1="70" x2="10" y2="70" />
-                        <line x1="115" y1="70" x2="130" y2="70" />
-                    </svg>
-                </div>
-                <h1>FRAGMENT II</h1>
-                <p>The birth of Julius Caesar is traditionally placed in 100 BCE. Although born into an ancient patrician family, his early position offered little indication of the political dominance he would later achieve.</p>
-            </div>
-
-            <div class="window hidden" id="f3">
-                <div class="symbol-container">
-                    <svg viewBox="0 0 140 140">
-                        <line x1="20" y1="20" x2="120" y2="20" />
-                        <line x1="20" y1="20" x2="20" y2="120" />
-                        <line x1="20" y1="120" x2="120" y2="120" />
-                        <line x1="120" y1="20" x2="120" y2="120" />
-                        <line x1="20" y1="70" x2="120" y2="70" />
-                        <line x1="70" y1="20" x2="70" y2="120" />
-                        <circle cx="70" cy="70" r="25" />
-                    </svg>
-                </div>
-                <h1>FRAGMENT III</h1>
-                <p>In 70 BCE, Pompey and Crassus held the consulship together. Their election marked a significant shift in the political balance of the Republic and increased Pompey's influence in Rome.</p>
-            </div>
-
-            <div class="window hidden" id="f4">
-                <div class="symbol-container">
-                    <svg viewBox="0 0 140 140">
-                        <circle cx="50" cy="50" r="18" />
-                        <circle cx="90" cy="50" r="18" />
-                        <circle cx="70" cy="100" r="18" />
-                        <line x1="63" y1="63" x2="77" y2="87" />
-                        <line x1="77" y1="63" x2="63" y2="87" />
-                        <line x1="50" y1="68" x2="70" y2="82" />
-                        <line x1="90" y1="68" x2="70" y2="82" />
-                    </svg>
-                </div>
-                <h1>FRAGMENT IV</h1>
-                <p>The political alliance later known as the First Triumvirate emerged around 60 BCE, bringing Caesar, Pompey, and Crassus into a partnership intended to advance their respective ambitions.</p>
-            </div>
-
-            <div class="window hidden" id="f5">
-                <div class="symbol-container">
-                    <svg viewBox="0 0 140 140">
-                        <rect x="30" y="40" width="80" height="60" />
-                        <line x1="30" y1="40" x2="70" y2="15" />
-                        <line x1="110" y1="40" x2="70" y2="15" />
-                        <line x1="70" y1="15" x2="70" y2="5" />
-                        <circle cx="70" cy="70" r="14" />
-                        <line x1="70" y1="84" x2="70" y2="100" />
-                    </svg>
-                </div>
-                <h1>FRAGMENT V</h1>
-                <p>Caesar's consulship in 59 BCE strengthened his political position and secured the commands that would eventually lead to his conquest of Gaul.</p>
-            </div>
-
-            <div class="window hidden" id="f6">
-                <div class="symbol-container">
-                    <svg viewBox="0 0 140 140">
-                        <path d="M10,70 Q35,40 70,70 Q105,100 130,70" />
-                        <path d="M10,85 Q35,55 70,85 Q105,115 130,85" />
-                        <path d="M10,100 Q35,70 70,100 Q105,130 130,100" />
-                        <line x1="70" y1="10" x2="70" y2="55" />
-                        <circle cx="70" cy="55" r="6" />
-                    </svg>
-                </div>
-                <h1>FRAGMENT VI</h1>
-                <p>The crossing of the Rubicon in 49 BCE transformed a political dispute into open civil war. Caesar's advance forced many of his rivals, including Pompey, to abandon Rome.</p>
-            </div>
-
-            <div class="window hidden" id="f7">
-                <div class="symbol-container">
-                    <svg viewBox="0 0 140 140">
-                        <polygon points="70,10 130,130 10,130" />
-                        <line x1="70" y1="10" x2="70" y2="130" />
-                        <line x1="10" y1="130" x2="130" y2="130" />
-                        <rect x="60" y="90" width="20" height="30" />
-                        <line x1="60" y1="105" x2="50" y2="105" />
-                        <line x1="80" y1="105" x2="90" y2="105" />
-                    </svg>
-                </div>
-                <h1>FRAGMENT VII</h1>
-                <p>After his defeat at Pharsalus, Pompey fled eastward. In 48 BCE, he arrived in Egypt, where he was assassinated shortly after reaching the shore.</p>
-            </div>
-
-            <div class="window hidden" id="notes">
-                <h1>ARCHIVIST'S COMMENTARY</h1>
-                <div class="file-meta">Reference: REG-VII · MS 1847.3</div>
-                <div class="note">
-                    <p>The present register preserves only seven entries considered sufficiently complete for study. Earlier copies refer to additional material, though no reliable versions are known to survive.</p>
-                </div>
-                <div class="note">
-                    <p>Comparison with surviving references suggests that the register was assembled from several damaged accounts rather than copied from a single original source. The compiler appears to have combined fragmented material into a unified record before preservation.</p>
-                </div>
-                <div class="note">
-                    <p>Although the surviving fragments likely originated from different documents, the final arrangement displays a deliberate consistency. The sequence preserved here appears more systematic than would be expected from the condition of the source material itself.</p>
-                </div>
-                <div class="note">
-                    <p>Certain annotations employ ordinal conventions commonly encountered in Roman administrative records. Such notation would have been familiar to educated officials and therefore rarely required explanation within contemporary documents.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function openFile(id, element) {
-            document.querySelectorAll('.window').forEach(w => {
-                w.classList.add('hidden');
-            });
-            document.getElementById(id).classList.remove('hidden');
-
-            document.querySelectorAll('.file').forEach(f => {
-                f.classList.remove('active-file');
-            });
-            if (element) {
-                element.classList.add('active-file');
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const firstFile = document.querySelector('.file.active-file');
-            if (firstFile) {
-                const onclickAttr = firstFile.getAttribute('onclick');
-                const match = onclickAttr.match(/'([^']+)'/);
-                if (match) {
-                    document.getElementById('welcome').classList.add('hidden');
-                    document.getElementById(match[1]).classList.remove('hidden');
-                }
-            }
-        });
-    </script>
-</body>
-</html>
+</head> <body> <div id="topbar"> <div>THE SEVENTH REGISTER</div> <div></div> </div> <div id="container"> <div id="sidebar"> <h2>FRAGMENTS</h2> <div class="file-list"> <div class="file active-file" onclick="openFile('f1', this)"> <span class="file-icon">I</span> <span class="file-name">CAESAR</span> </div> <div class="file" onclick="openFile('f2', this)"> <span class="file-icon">II</span> <span class="file-name">POMPEY</span> </div> <div class="file" onclick="openFile('f3', this)"> <span class="file-icon">III</span> <span class="file-name">CICERO</span> </div> <div class="file" onclick="openFile('f4', this)"> <span class="file-icon">IV</span> <span class="file-name">CRASSUS</span> </div> <div class="file" onclick="openFile('f5', this)"> <span class="file-icon">V</span> <span class="file-name">BRUTUS</span> </div> <div class="file" onclick="openFile('f6', this)"> <span class="file-icon">VI</span> <span class="file-name">AUGUSTUS</span> </div> <div class="file" onclick="openFile('f7', this)"> <span class="file-icon">VII</span> <span class="file-name">TRAJAN</span> </div> <div class="file" onclick="openFile('f8', this)"> <span class="file-icon">VIII</span> <span class="file-name">THE ARCHIVIST</span> </div> <div style="border-top:1px solid #1f1f1f; margin: 6px 0;"></div> <div class="file" onclick="openFile('notes', this)"> <span class="file-icon">¶</span> <span class="file-name">COMMENTARY</span> </div> </div> </div> <div id="viewer"> <div class="window" id="welcome"> <div class="symbol-container"> <div class="old-italic">𐌁𐌌𐌒𐌖𐌂𐌉𐌋𐌖𐌂𐌖</div> </div> <h1>THE SEVENTH REGISTER</h1> <p class="welcome-text">Select a fragment from the archive index.</p> <p class="small">Pelusium Collection</p> </div> <div class="window hidden" id="f1"> <div class="symbol-container"> <div class="old-italic">𐌁</div> </div> <h1>FRAGMENT I · CAESAR</h1> <p>Gaius Julius Caesar first drew breath in the year of the consulship of Marius and Flaccus. Scion of a house that traced its origin to the goddess Venus, he spent his early manhood in the shadow of Sulla's proscriptions, narrowly escaping the fate that befell so many of his Marian kinsmen. The records of the college of pontiffs note his election to the high priesthood before he had reached the age of thirty, an omen that few among the senate chose to heed.</p> <div class="note"> <p><span class="small">Archivist's Note:</span> Imperator in the field and in the record, yet here we possess only the faintest outline of his early vigour. The ink shows an unusual admixture of lampblack, consistent with MSS. prepared during the African campaigns. Compare against MS. 𐌅𐌉-27 for parallel accounts of the priesthood.</p> </div> </div> <div class="window hidden" id="f2"> <div class="symbol-container"> <div class="old-italic">𐌌</div> </div> <h1>FRAGMENT II · POMPEY</h1> <p>Gnaeus Pompeius Magnus entered the ranks of command not through the customary ladder of senatorial office but upon the shoulders of legions raised from his father's Picene estates. At twenty-three years of age he styled himself imperator, a title the senate ratified only after the mangled corpse of the elder Pompeius had been consigned to the earth. Fortune seemed to wrap him in a cloak of invulnerability until the plains of Pharsalus demonstrated that even the Great must bow to fate.</p> <div class="note"> <p><span class="small">Archivist's Note:</span> Mors followed his footsteps from the Sertorian heights to the Pelusian shore, ever patient and unyielding. The biographical tradition preserved here omits the eastern triumph, suggesting this copy predates the monumental narratives of the Augustan age.</p> </div> </div> <div class="window hidden" id="f3"> <div class="symbol-container"> <div class="old-italic">𐌒</div> </div> <h1>FRAGMENT III · CICERO</h1> <p>Marcus Tullius Cicero, a man of equestrian stock from the hills of Arpinum, grasped the consulship through the sheer force of oratory and the trembling indecision of the optimates during the Catilinarian crisis. The execution of the conspirators within the Tullianum would later become the noose upon which his enemies hanged his reputation. His letters, preserved in part within the archive, reveal a disposition torn perpetually between philosophical detachment and the bitter urgencies of the Forum.</p> <div class="note"> <p><span class="small">Archivist's Note:</span> Pax was his constant plea, a harmony of the orders that dissolved the moment soldiers replaced senators as the arbiters of Roman destiny. The hand that copied this passage betrays a tremor, perhaps the result of advancing age or chill conditions. Consult REG. ᚷᛖ-14 for the consular dating conventions employed.</p> </div> </div> <div class="window hidden" id="f4"> <div class="symbol-container"> <div class="old-italic">𐌖</div> </div> <h1>FRAGMENT IV · CRASSUS</h1> <p>Marcus Licinius Crassus Dives accumulated a fortune that rivalled the treasury of the state itself, purchasing the ruins of Rome after the fires and proscriptions to build an empire of brick and rent. His appetite for gold was matched only by a consuming hunger for military renown, a desire that drove him eastward across the Euphrates into the Parthian wastes. The fragment ends abruptly with a description of the standards being raised at Carrhae, the eagles already dulled by dust.</p> <div class="note"> <p><span class="small">Archivist's Note:</span> Exercitus in the manner of a mercantile ledger rather than a martial roster—so the sources describe his legions. The molten gold poured down his throat in the eastern desert remains one of the more persistent legends preserved in this collection.</p> </div> </div> <div class="window hidden" id="f5"> <div class="symbol-container"> <div class="old-italic">𐌂</div> </div> <h1>FRAGMENT V · BRUTUS</h1> <p>Marcus Junius Brutus carried within his person the twin legacies of the Republic's founding and its dismantling, a descendant of the Tarquin-expeller and the son of Caesar's long-time mistress Servilia. The coinage struck in the east during the months before Philippi bore the cap of liberty and two daggers, a proclamation that the old order could be restored by sharpened iron. The fragment preserves an account of his sleepless vigils in the tent at Sardis, where the spectre of his benefactor is said to have appeared at the threshold.</p> <div class="note"> <p><span class="small">Archivist's Note:</span> Roma weighed on him more heavily than on any of the other conspirators; the civic burden is evident in every line. The text shows severe water damage along the lower margin, suggesting storage in the lower chambers of the repository. See CAT. 𐌍𐌄-03 regarding the Sardis apparition.</p> </div> </div> <div class="window hidden" id="f6"> <div class="symbol-container"> <div class="old-italic">𐌉</div> </div> <h1>FRAGMENT VI · AUGUSTUS</h1> <p>The youth Octavius Thurinus, frail of body and formidable of calculation, received the adoption of Caesar while the Dictator's blood still congealed upon the senate floor. By the age of thirty-three, he had extinguished the wars of faction and fashioned from the ashes of the Republic a principate veiled in restored tradition. The fragment records his census of the Roman people, the numbers scrawled in a sloping cursive that suggests haste or the tremulous hand of old age, counting the millions he now held in dominion.</p> <div class="note"> <p><span class="small">Archivist's Note:</span> Ius was his preferred instrument, the legal fiction that masked the concentration of imperium. The manuscript preserves an unusual marginal gloss referring to the closing of the temple of Janus, an event celebrated with processions now lost to living memory.</p> </div> </div> <div class="window hidden" id="f7"> <div class="symbol-container"> <div class="old-italic">𐌋𐌖</div> </div> <h1>FRAGMENT VII · TRAJAN</h1> <p>Marcus Ulpius Traianus, born at Italica in the province of Hispania Baetica, ascended to the purple through the discernment of the aging Nerva and the acclamation of the legions upon the Rhine. His campaigns against the Dacian kingdom yielded triumphs unparalleled since the days of the divine Augustus, filling the coffers and raising a forum built upon the bones of a levelled mountain. The fragment details the preparations for the eastern expedition, a relentless advance into the Parthian heartland that would be halted only by the emperor's final illness at Selinus.</p> <div class="note"> <p><span class="small">Archivist's Note:</span> Urbs flourished under his patronage, as did the far provinces; the alimenta for the children of Italy is preserved here in a copyist's tribute. The column that bears his name is mentioned only glancingly, as if the scribe took its magnificence as common knowledge. Cross-reference REF. ℜ𝔈-08 for the Dacian tribute records.</p> </div> </div> <div class="window hidden" id="f8"> <div class="symbol-container"> <div class="old-italic">𐌂𐌖</div> </div> <h1>FRAGMENT VIII · THE ARCHIVIST</h1> <p>The custodian of the present register remains unnamed, his identity subsumed beneath the weight of the documents he sought to preserve. His script betrays the discipline of the imperial chancellery, a uniform hand that smoothed the irregularities of the decaying sources he transcribed. From the marginal corrections it is evident that he compared multiple exemplars, preferring the older reading when the newer text appeared contaminated by rhetorical embellishment. The work was likely undertaken during the reign of the Antonines, a period when the past was already regarded with a reverence that bordered on melancholy. In preserving these notices of the great men of Rome, the archivist surrendered his own name to the silence of the stacks, a final act of devotion to the records he served.</p> <div class="note"> <p><span class="small">Archivist's Note:</span> Manus that compiled these leaves has left no biography save the labour itself. The preservation of memory was his sole monument, a monument built of parchment and ink rather than stone, and perhaps for that reason the more enduring.</p> </div> </div> <div class="window hidden" id="notes"> <div class="symbol-container"> <div class="old-italic">¶</div> </div> <h1>ARCHIVIST'S COMMENTARY</h1> <div class="file-meta">Reference: REG-VII · MS 1847.3 · BMQYCILUCY</div> <div class="note"> <p>The fragments disagree in many places. The notes do not.</p> </div> <div class="note"> <p>The body of a manuscript may decay. The margin remembers.</p> </div> <div class="note"> <p>The compiler's habit was peculiar. He always began where others would have ended.</p> </div> <div class="note"> <p>The present register preserves eight entries, though the spine of the original codex suggests accommodation for a greater number. Whether the missing leaves were lost before the binding or excised in some later calamity remains a matter of dispute among those who have handled the parchment. The hands are three in number, distinguishable by the terminal strokes of the letter 's' and the ligature employed for 'ae'. The earliest stratum likely dates from the reign of Marcus Aurelius, with subsequent corrections added in the script of a later century, perhaps by a monk of the Coele-Syria scriptorium where the collection was housed before its transfer to the Pelusium repository.</p> </div> <div class="note"> <p>It has been observed that the ordering of the fragments does not adhere to strict chronology, nor to the rank of the subjects, but rather follows an internal logic discernible only to the original arranger. Those who have spent long nights with these pages begin to perceive a rhythm, a deliberate pairing of contrasts across the sequence.</p> </div> <div class="note"> <p>The ink of the Archivist's Notes differs sharply from that of the principal text, being richer in iron and exhibiting a more pronounced reddish bloom under lamplight. This indicates the annotations were not merely marginalia but a separate layer of authority, added deliberately and with care, perhaps as a bulwark against the corruption of the main text.</p> </div> </div> </div> </div> <script> function openFile(id, element) { document.querySelectorAll('.window').forEach(w => { w.classList.add('hidden'); }); document.getElementById(id).classList.remove('hidden'); document.querySelectorAll('.file').forEach(f => { f.classList.remove('active-file'); }); if (element) { element.classList.add('active-file'); } } document.addEventListener('DOMContentLoaded', function() { const firstFile = document.querySelector('.file.active-file'); if (firstFile) { const onclickAttr = firstFile.getAttribute('onclick'); const match = onclickAttr.match(/'([^']+)'/); if (match) { document.getElementById('welcome').classList.add('hidden'); document.getElementById(match[1]).classList.remove('hidden'); } } }); </script></body> </html>
