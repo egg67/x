@@ -334,6 +334,7 @@
             }
         }
 
+        /* refined sigil container for refined latin letterforms */
         .symbol-container {
             margin: 0 auto 20px auto;
             display: flex;
@@ -366,18 +367,38 @@
             }
         }
 
+        /* refined central display font: elegant serif with weight and classic proportions */
         .old-italic {
-            font-family: 'Courier New', 'Courier', 'Liberation Mono', 'Consolas', 'Menlo', monospace;
+            font-family: 'Cinema', 'Courier New', 'Courier', 'Liberation Mono', 'Consolas', 'Menlo', monospace;
             font-size: 90px;
-            color: #6a6a6a;
+            font-weight: 500;
+            color: #7a7a7a;
             line-height: 1.2;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.04em;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             flex-wrap: wrap;
             word-break: keep-all;
+            text-shadow: 0 1px 0 rgba(0,0,0,0.4);
+        }
+
+        /* fallback for older browsers: elegant glyph styling */
+        @supports (font-variant: small-caps) {
+            .old-italic {
+                font-family: 'Times New Roman', 'Georgia', 'Cinema', 'Courier New', monospace;
+                font-weight: 500;
+                letter-spacing: 0.03em;
+            }
+        }
+
+        /* nice latin letterforms: classic serif for a monumental, inscribed feeling */
+        .old-italic {
+            font-family: 'Times New Roman', 'Georgia', 'Baskerville', 'Palatino', 'Courier New', monospace;
+            font-weight: 550;
+            font-style: normal;
+            text-transform: none;
         }
 
         @media (min-width: 480px) {
@@ -410,9 +431,12 @@
             }
         }
 
+        /* two-letter sigil retains same refined latin aesthetic but slight spacing adjustment */
         .two-letter-sigil {
             font-size: 75px;
-            letter-spacing: -0.02em;
+            letter-spacing: 0.02em;
+            font-family: 'Times New Roman', 'Georgia', 'Baskerville', 'Palatino', monospace;
+            font-weight: 550;
         }
 
         @media (min-width: 480px) {
@@ -571,6 +595,12 @@
         #sidebar, #viewer {
             -webkit-overflow-scrolling: touch;
         }
+
+        /* bonus decorative touch for letters: slight carved texture */
+        .old-italic, .two-letter-sigil {
+            opacity: 0.92;
+            transition: opacity 0.1s;
+        }
     </style>
 </head>
 <body>
@@ -624,20 +654,20 @@
         </div>
 
         <div id="viewer">
-            <!-- WELCOME: uses the full sequence as an epigraph -->
-            <div class="window" id="welcome">
+            <!-- WELCOME: retains epigraph character but uses fresh B M Q Y C I LU CY sequence in nice font -->
+            <div class="window hidden" id="welcome">
                 <div class="symbol-container">
-                    <div class="old-italic">𐌁𐌌𐌒𐌖𐌂𐌉𐌋𐌖𐌂𐌖</div>
+                    <div class="old-italic">B M Q Y C I LU CY</div>
                 </div>
                 <h1>THE SEVENTH REGISTER</h1>
                 <p class="welcome-text">Select a fragment from the archive index.</p>
                 <p class="small">Pelusium Collection</p>
             </div>
 
-            <!-- FRAGMENT I · CAESAR → 𐌁 -->
+            <!-- FRAGMENT I · CAESAR → B (formerly 𐌁) -->
             <div class="window hidden" id="f1">
                 <div class="symbol-container">
-                    <div class="old-italic">𐌁</div>
+                    <div class="old-italic">B</div>
                 </div>
                 <h1>FRAGMENT I · CAESAR</h1>
                 <p>Gaius Julius Caesar first drew breath in the year of the consulship of Marius and Flaccus. Scion of a house that traced its origin to the goddess Venus, he spent his early manhood in the shadow of Sulla's proscriptions, narrowly escaping the fate that befell so many of his Marian kinsmen. The records of the college of pontiffs note his election to the high priesthood before he had reached the age of thirty, an omen that few among the senate chose to heed.</p>
@@ -646,10 +676,10 @@
                 </div>
             </div>
 
-            <!-- FRAGMENT II · POMPEY → 𐌌 -->
+            <!-- FRAGMENT II · POMPEY → M -->
             <div class="window hidden" id="f2">
                 <div class="symbol-container">
-                    <div class="old-italic">𐌌</div>
+                    <div class="old-italic">M</div>
                 </div>
                 <h1>FRAGMENT II · POMPEY</h1>
                 <p>Gnaeus Pompeius Magnus entered the ranks of command not through the customary ladder of senatorial office but upon the shoulders of legions raised from his father's Picene estates. At twenty-three years of age he styled himself imperator, a title the senate ratified only after the mangled corpse of the elder Pompeius had been consigned to the earth. Fortune seemed to wrap him in a cloak of invulnerability until the plains of Pharsalus demonstrated that even the Great must bow to fate.</p>
@@ -658,10 +688,10 @@
                 </div>
             </div>
 
-            <!-- FRAGMENT III · CICERO → 𐌒 -->
+            <!-- FRAGMENT III · CICERO → Q -->
             <div class="window hidden" id="f3">
                 <div class="symbol-container">
-                    <div class="old-italic">𐌒</div>
+                    <div class="old-italic">Q</div>
                 </div>
                 <h1>FRAGMENT III · CICERO</h1>
                 <p>Marcus Tullius Cicero, a man of equestrian stock from the hills of Arpinum, grasped the consulship through the sheer force of oratory and the trembling indecision of the optimates during the Catilinarian crisis. The execution of the conspirators within the Tullianum would later become the noose upon which his enemies hanged his reputation. His letters, preserved in part within the archive, reveal a disposition torn perpetually between philosophical detachment and the bitter urgencies of the Forum.</p>
@@ -670,10 +700,10 @@
                 </div>
             </div>
 
-            <!-- FRAGMENT IV · CRASSUS → 𐌖 -->
+            <!-- FRAGMENT IV · CRASSUS → Y -->
             <div class="window hidden" id="f4">
                 <div class="symbol-container">
-                    <div class="old-italic">𐌖</div>
+                    <div class="old-italic">Y</div>
                 </div>
                 <h1>FRAGMENT IV · CRASSUS</h1>
                 <p>Marcus Licinius Crassus Dives accumulated a fortune that rivalled the treasury of the state itself, purchasing the ruins of Rome after the fires and proscriptions to build an empire of brick and rent. His appetite for gold was matched only by a consuming hunger for military renown, a desire that drove him eastward across the Euphrates into the Parthian wastes. The fragment ends abruptly with a description of the standards being raised at Carrhae, the eagles already dulled by dust.</p>
@@ -682,10 +712,10 @@
                 </div>
             </div>
 
-            <!-- FRAGMENT V · BRUTUS → 𐌂 -->
+            <!-- FRAGMENT V · BRUTUS → C -->
             <div class="window hidden" id="f5">
                 <div class="symbol-container">
-                    <div class="old-italic">𐌂</div>
+                    <div class="old-italic">C</div>
                 </div>
                 <h1>FRAGMENT V · BRUTUS</h1>
                 <p>Marcus Junius Brutus carried within his person the twin legacies of the Republic's founding and its dismantling, a descendant of the Tarquin-expeller and the son of Caesar's long-time mistress Servilia. The coinage struck in the east during the months before Philippi bore the cap of liberty and two daggers, a proclamation that the old order could be restored by sharpened iron. The fragment preserves an account of his sleepless vigils in the tent at Sardis, where the spectre of his benefactor is said to have appeared at the threshold.</p>
@@ -694,10 +724,10 @@
                 </div>
             </div>
 
-            <!-- FRAGMENT VI · AUGUSTUS → 𐌉 -->
+            <!-- FRAGMENT VI · AUGUSTUS → I -->
             <div class="window hidden" id="f6">
                 <div class="symbol-container">
-                    <div class="old-italic">𐌉</div>
+                    <div class="old-italic">I</div>
                 </div>
                 <h1>FRAGMENT VI · AUGUSTUS</h1>
                 <p>The youth Octavius Thurinus, frail of body and formidable of calculation, received the adoption of Caesar while the Dictator's blood still congealed upon the senate floor. By the age of thirty-three, he had extinguished the wars of faction and fashioned from the ashes of the Republic a principate veiled in restored tradition. The fragment records his census of the Roman people, the numbers scrawled in a sloping cursive that suggests haste or the tremulous hand of old age, counting the millions he now held in dominion.</p>
@@ -706,10 +736,10 @@
                 </div>
             </div>
 
-            <!-- FRAGMENT VII · TRAJAN → 𐌋𐌖 -->
+            <!-- FRAGMENT VII · TRAJAN → LU (two‑letter) -->
             <div class="window hidden" id="f7">
                 <div class="symbol-container">
-                    <div class="old-italic two-letter-sigil">𐌋𐌖</div>
+                    <div class="old-italic two-letter-sigil">LU</div>
                 </div>
                 <h1>FRAGMENT VII · TRAJAN</h1>
                 <p>Marcus Ulpius Traianus, born at Italica in the province of Hispania Baetica, ascended to the purple through the discernment of the aging Nerva and the acclamation of the legions upon the Rhine. His campaigns against the Dacian kingdom yielded triumphs unparalleled since the days of the divine Augustus, filling the coffers and raising a forum built upon the bones of a levelled mountain. The fragment details the preparations for the eastern expedition, a relentless advance into the Parthian heartland that would be halted only by the emperor's final illness at Selinus.</p>
@@ -718,10 +748,10 @@
                 </div>
             </div>
 
-            <!-- FRAGMENT VIII · THE ARCHIVIST → 𐌂𐌖 -->
+            <!-- FRAGMENT VIII · THE ARCHIVIST → CY (two‑letter) -->
             <div class="window hidden" id="f8">
                 <div class="symbol-container">
-                    <div class="old-italic two-letter-sigil">𐌂𐌖</div>
+                    <div class="old-italic two-letter-sigil">CY</div>
                 </div>
                 <h1>FRAGMENT VIII · THE ARCHIVIST</h1>
                 <p>The custodian of the present register remains unnamed, his identity subsumed beneath the weight of the documents he sought to preserve. His script betrays the discipline of the imperial chancellery, a uniform hand that smoothed the irregularities of the decaying sources he transcribed. From the marginal corrections it is evident that he compared multiple exemplars, preferring the older reading when the newer text appeared contaminated by rhetorical embellishment. The work was likely undertaken during the reign of the Antonines, a period when the past was already regarded with a reverence that bordered on melancholy. In preserving these notices of the great men of Rome, the archivist surrendered his own name to the silence of the stacks, a final act of devotion to the records he served.</p>
