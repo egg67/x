@@ -15,48 +15,84 @@
             background: #0c0c0c;
             color: #c5c5c5;
             font-family: 'Courier New', 'Courier', 'Liberation Mono', 'Consolas', 'Menlo', monospace;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             -webkit-font-smoothing: none;
             -moz-osx-font-smoothing: unset;
-            background-image: none;
         }
 
         #topbar {
             background: #161616;
             border-bottom: 1px solid #2a2a2a;
-            padding: 15px 36px;
+            padding: 12px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 16.5px;
+            font-size: 14px;
             letter-spacing: 0.08em;
             text-transform: uppercase;
             color: #999;
             flex-shrink: 0;
         }
 
+        @media (min-width: 768px) {
+            #topbar {
+                padding: 15px 36px;
+                font-size: 16.5px;
+            }
+        }
+
         #container {
             display: flex;
             flex: 1;
             overflow: hidden;
-            height: calc(100vh - 61.5px);
+            flex-direction: column;
+        }
+
+        @media (min-width: 768px) {
+            #container {
+                flex-direction: row;
+                height: calc(100vh - 61.5px);
+            }
         }
 
         #sidebar {
-            width: 450px;
-            border-right: 1px solid #2a2a2a;
+            width: 100%;
+            border-right: none;
+            border-bottom: 1px solid #2a2a2a;
             background: #111111;
             overflow-y: auto;
             flex-shrink: 0;
             display: flex;
             flex-direction: column;
+            max-height: 40vh;
+        }
+
+        @media (min-width: 768px) {
+            #sidebar {
+                width: 320px;
+                max-height: none;
+                border-right: 1px solid #2a2a2a;
+                border-bottom: none;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            #sidebar {
+                width: 400px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            #sidebar {
+                width: 450px;
+            }
         }
 
         #sidebar h2 {
-            padding: 24px 30px;
-            font-size: 15px;
+            padding: 16px 20px;
+            font-size: 13px;
             letter-spacing: 0.2em;
             text-transform: uppercase;
             border-bottom: 1px solid #2a2a2a;
@@ -65,23 +101,54 @@
             background: #0e0e0e;
         }
 
+        @media (min-width: 768px) {
+            #sidebar h2 {
+                padding: 20px 24px;
+                font-size: 14px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            #sidebar h2 {
+                padding: 24px 30px;
+                font-size: 15px;
+            }
+        }
+
         .file-list {
             flex: 1;
             overflow-y: auto;
         }
 
         .file {
-            padding: 18px 30px;
+            padding: 12px 16px;
             cursor: pointer;
             border-bottom: 1px solid #1f1f1f;
             transition: background 0.1s ease;
-            font-size: 18px;
+            font-size: 15px;
             letter-spacing: 0.04em;
             color: #a0a0a0;
             display: flex;
             align-items: center;
-            gap: 15px;
-            border-left: 4.5px solid transparent;
+            gap: 12px;
+            border-left: 3px solid transparent;
+        }
+
+        @media (min-width: 768px) {
+            .file {
+                padding: 14px 20px;
+                font-size: 16px;
+                gap: 14px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .file {
+                padding: 18px 30px;
+                font-size: 18px;
+                gap: 15px;
+                border-left-width: 4.5px;
+            }
         }
 
         .file:hover {
@@ -91,16 +158,37 @@
 
         .file.active-file {
             background: #1c1c1c;
-            border-left: 4.5px solid #666;
+            border-left: 3px solid #666;
             color: #d4d4d4;
             font-weight: bold;
         }
 
+        @media (min-width: 1024px) {
+            .file.active-file {
+                border-left-width: 4.5px;
+            }
+        }
+
         .file .file-icon {
-            font-size: 21px;
-            width: 27px;
+            font-size: 18px;
+            width: 24px;
             text-align: center;
             color: #666;
+            flex-shrink: 0;
+        }
+
+        @media (min-width: 768px) {
+            .file .file-icon {
+                font-size: 20px;
+                width: 26px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .file .file-icon {
+                font-size: 21px;
+                width: 27px;
+            }
         }
 
         .file.active-file .file-icon {
@@ -109,110 +197,320 @@
 
         .file .file-name {
             flex: 1;
+            white-space: normal;
+            word-break: break-word;
         }
 
         #viewer {
             flex: 1;
-            padding: 60px 75px;
+            padding: 30px 20px;
             overflow-y: auto;
             background: #0f0f0f;
-            background-image: none;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
+            min-height: 0;
+        }
+
+        @media (min-width: 640px) {
+            #viewer {
+                padding: 40px 30px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            #viewer {
+                padding: 60px 50px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            #viewer {
+                padding: 60px 75px;
+            }
         }
 
         .window {
-            max-width: 1050px;
+            max-width: 100%;
             margin: 0 auto;
             text-align: center;
             width: 100%;
         }
 
+        @media (min-width: 768px) {
+            .window {
+                max-width: 900px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .window {
+                max-width: 1050px;
+            }
+        }
+
         .window h1 {
-            font-size: 27px;
+            font-size: 20px;
             font-weight: 400;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
             color: #999;
-            margin-top: 45px;
-            margin-bottom: 42px;
+            margin-top: 25px;
+            margin-bottom: 25px;
             word-spacing: 0.2em;
             border: none;
             padding: 0;
+            word-break: break-word;
+        }
+
+        @media (min-width: 640px) {
+            .window h1 {
+                font-size: 24px;
+                margin-top: 35px;
+                margin-bottom: 35px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .window h1 {
+                font-size: 27px;
+                margin-top: 45px;
+                margin-bottom: 42px;
+                letter-spacing: 0.15em;
+            }
         }
 
         .window .file-meta {
-            font-size: 15px;
+            font-size: 12px;
             color: #555;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            margin-top: 36px;
+            margin-top: 25px;
+            word-break: break-word;
+        }
+
+        @media (min-width: 768px) {
+            .window .file-meta {
+                font-size: 14px;
+                margin-top: 30px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .window .file-meta {
+                font-size: 15px;
+                margin-top: 36px;
+            }
         }
 
         .window p {
-            line-height: 1.8;
-            margin-bottom: 27px;
-            font-size: 19.5px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-size: 16px;
             color: #b8b8b8;
             word-spacing: 0.04em;
             letter-spacing: 0.02em;
-            text-align: center;
-            max-width: 900px;
+            text-align: left;
+            max-width: 100%;
             margin-left: auto;
             margin-right: auto;
+            padding: 0 8px;
         }
 
-        /* container for the large central runic sigils */
+        @media (min-width: 640px) {
+            .window p {
+                font-size: 17px;
+                line-height: 1.75;
+                margin-bottom: 24px;
+                padding: 0;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .window p {
+                font-size: 19.5px;
+                margin-bottom: 27px;
+                text-align: center;
+            }
+        }
+
         .symbol-container {
-            margin: 0 auto 30px auto;
+            margin: 0 auto 20px auto;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 270px;
+            height: auto;
+            min-height: 140px;
             user-select: none;
+            padding: 10px;
+        }
+
+        @media (min-width: 640px) {
+            .symbol-container {
+                min-height: 180px;
+                margin-bottom: 25px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .symbol-container {
+                min-height: 210px;
+                margin-bottom: 30px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .symbol-container {
+                height: 270px;
+                min-height: 270px;
+            }
         }
 
         .old-italic {
             font-family: 'Courier New', 'Courier', 'Liberation Mono', 'Consolas', 'Menlo', monospace;
-            font-size: 180px;
+            font-size: 90px;
             color: #6a6a6a;
-            line-height: 1;
+            line-height: 1.2;
             letter-spacing: 0.05em;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
             text-align: center;
+            flex-wrap: wrap;
+            word-break: keep-all;
         }
 
-        /* special handling for two‑letter sigils (𐌋𐌖, 𐌂𐌖) to keep proportions elegant */
+        @media (min-width: 480px) {
+            .old-italic {
+                font-size: 110px;
+            }
+        }
+
+        @media (min-width: 640px) {
+            .old-italic {
+                font-size: 130px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .old-italic {
+                font-size: 150px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .old-italic {
+                font-size: 170px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .old-italic {
+                font-size: 180px;
+            }
+        }
+
         .two-letter-sigil {
-            font-size: 155px;
+            font-size: 75px;
             letter-spacing: -0.02em;
         }
 
+        @media (min-width: 480px) {
+            .two-letter-sigil {
+                font-size: 90px;
+            }
+        }
+
+        @media (min-width: 640px) {
+            .two-letter-sigil {
+                font-size: 105px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .two-letter-sigil {
+                font-size: 125px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .two-letter-sigil {
+                font-size: 145px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .two-letter-sigil {
+                font-size: 155px;
+            }
+        }
+
         .note {
-            border-left: 3px solid #444444;
-            padding-left: 33px;
-            margin-bottom: 33px;
-            padding-top: 3px;
-            padding-bottom: 3px;
+            border-left: 2px solid #444444;
+            padding-left: 16px;
+            margin-bottom: 20px;
+            padding-top: 2px;
+            padding-bottom: 2px;
             text-align: left;
+            margin-top: 16px;
+        }
+
+        @media (min-width: 640px) {
+            .note {
+                border-left-width: 3px;
+                padding-left: 24px;
+                margin-bottom: 25px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .note {
+                padding-left: 33px;
+                margin-bottom: 33px;
+            }
         }
 
         .note p {
-            font-size: 18px;
+            font-size: 14px;
             color: #a5a5a5;
-            line-height: 1.75;
+            line-height: 1.65;
             text-align: left;
             max-width: 100%;
+            padding: 0;
+            margin-bottom: 0;
+        }
+
+        @media (min-width: 640px) {
+            .note p {
+                font-size: 16px;
+                line-height: 1.7;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .note p {
+                font-size: 18px;
+                line-height: 1.75;
+            }
         }
 
         .small {
             color: #5a5a5a;
-            font-size: 15px;
+            font-size: 11px;
             letter-spacing: 0.06em;
             text-transform: uppercase;
+        }
+
+        @media (min-width: 640px) {
+            .small {
+                font-size: 13px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .small {
+                font-size: 15px;
+            }
         }
 
         .hidden {
@@ -221,54 +519,57 @@
 
         .welcome-text {
             color: #6e6e6e;
-            margin-top: 45px;
+            margin-top: 25px;
         }
 
-        @media screen and (max-width: 700px) {
-            #sidebar {
-                width: 330px;
+        @media (min-width: 768px) {
+            .welcome-text {
+                margin-top: 35px;
             }
+        }
+
+        @media (min-width: 1024px) {
+            .welcome-text {
+                margin-top: 45px;
+            }
+        }
+
+        /* Improved touch targets for mobile */
+        @media (max-width: 767px) {
             .file {
-                font-size: 15px;
-                padding: 15px 21px;
+                padding: 14px 16px;
             }
+            
+            .file .file-icon {
+                font-size: 18px;
+                width: 28px;
+            }
+            
             #viewer {
-                padding: 37.5px 30px;
+                padding: 20px 16px;
             }
+            
             .window h1 {
-                font-size: 24px;
+                margin-top: 15px;
+                margin-bottom: 15px;
             }
+            
             .symbol-container {
-                height: 210px;
-            }
-            .old-italic {
-                font-size: 140px;
-            }
-            .two-letter-sigil {
-                font-size: 120px;
+                min-height: 120px;
+                margin-bottom: 15px;
             }
         }
 
-        @media screen and (max-width: 520px) {
-            #container {
-                flex-direction: column;
-            }
-            #sidebar {
-                width: 100%;
-                height: auto;
-                max-height: 270px;
-                border-right: none;
-                border-bottom: 1px solid #2a2a2a;
-            }
-            #viewer {
-                padding: 30px 24px;
-            }
-            .old-italic {
-                font-size: 110px;
-            }
-            .two-letter-sigil {
-                font-size: 95px;
-            }
+        /* Prevent overflow issues */
+        .window p, .note p {
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        /* Smooth scrolling for sidebar on mobile */
+        #sidebar, #viewer {
+            -webkit-overflow-scrolling: touch;
         }
     </style>
 </head>
@@ -405,7 +706,7 @@
                 </div>
             </div>
 
-            <!-- FRAGMENT VII · TRAJAN → 𐌋𐌖 (two‑character sigil) -->
+            <!-- FRAGMENT VII · TRAJAN → 𐌋𐌖 -->
             <div class="window hidden" id="f7">
                 <div class="symbol-container">
                     <div class="old-italic two-letter-sigil">𐌋𐌖</div>
@@ -417,7 +718,7 @@
                 </div>
             </div>
 
-            <!-- FRAGMENT VIII · THE ARCHIVIST → 𐌂𐌖 (two‑character sigil) -->
+            <!-- FRAGMENT VIII · THE ARCHIVIST → 𐌂𐌖 -->
             <div class="window hidden" id="f8">
                 <div class="symbol-container">
                     <div class="old-italic two-letter-sigil">𐌂𐌖</div>
@@ -429,7 +730,7 @@
                 </div>
             </div>
 
-            <!-- COMMENTARY (notes section) → remains a standard ¶ symbol, not replaced, but left as is per your request (the eight letters already assigned above) -->
+            <!-- COMMENTARY (notes section) -->
             <div class="window hidden" id="notes">
                 <div class="symbol-container">
                     <div class="old-italic">¶</div>
@@ -460,15 +761,12 @@
 
     <script>
         function openFile(id, element) {
-            // hide all content windows
             document.querySelectorAll('.window').forEach(w => {
                 w.classList.add('hidden');
             });
-            // show selected window
             const target = document.getElementById(id);
             if (target) target.classList.remove('hidden');
 
-            // update active file styling
             document.querySelectorAll('.file').forEach(f => {
                 f.classList.remove('active-file');
             });
@@ -477,24 +775,20 @@
             }
         }
 
-        // on page load: ensure welcome hidden + first fragment visible according to active-file (CAESAR)
         document.addEventListener('DOMContentLoaded', function() {
             const firstFile = document.querySelector('.file.active-file');
             if (firstFile) {
                 const onclickAttr = firstFile.getAttribute('onclick');
                 const match = onclickAttr ? onclickAttr.match(/openFile\('([^']+)'/) : null;
                 if (match && match[1]) {
-                    const fragmentId = match[1];
                     const welcomeDiv = document.getElementById('welcome');
                     if (welcomeDiv) welcomeDiv.classList.add('hidden');
-                    const targetFragment = document.getElementById(fragmentId);
+                    const targetFragment = document.getElementById(match[1]);
                     if (targetFragment) targetFragment.classList.remove('hidden');
                 } else {
-                    // fallback: make sure welcome is visible
                     document.getElementById('welcome').classList.remove('hidden');
                 }
             } else {
-                // if no active file, show welcome
                 document.getElementById('welcome').classList.remove('hidden');
             }
         });
